@@ -13,13 +13,13 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   // MARK: - Properties
- 
+  
   var dataManager: DataManagerFacade!
   
   private var coreDataManager: CoreDataManager!
   private var networkingManager: NetworkingManager!
   
-  // MARK: - UIApplicationDidFinishLaunchingWithOptions
+  // MARK: - UIApplication Lifecycle
   
   func application(
     _ application: UIApplication,

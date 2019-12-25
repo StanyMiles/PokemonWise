@@ -9,9 +9,9 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+  
   var window: UIWindow?
-
+  
   func scene(
     _ scene: UIScene,
     willConnectTo session: UISceneSession,
@@ -19,9 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   ) {
     guard let _ = (scene as? UIWindowScene) else { return }
   }
-
+  
   func sceneDidEnterBackground(_ scene: UIScene) {
     (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
   }
-
+  
 }

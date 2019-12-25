@@ -11,13 +11,13 @@ import Foundation
 import CoreData
 
 extension CDListItem {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<CDListItem> {
-        return NSFetchRequest<CDListItem>(entityName: "CDListItem")
-    }
-
-    @NSManaged public var name: String
-    @NSManaged public var urlString: String
-    @NSManaged public var position: Int16
-
+  
+  @nonobjc public class func fetchRequest() -> NSFetchRequest<CDListItem> {
+    return NSFetchRequest<CDListItem>(entityName: "CDListItem")
+  }
+  
+  @NSManaged public var name: String
+  @NSManaged public var urlString: String
+  @NSManaged public var position: Int16
+  
 }

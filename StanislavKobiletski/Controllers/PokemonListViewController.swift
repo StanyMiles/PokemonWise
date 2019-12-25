@@ -9,11 +9,8 @@
 import UIKit
 
 class PokemonListViewController: UITableViewController {
-
-  // MARK: - Properties
   
-  private var pokemonListItems: [PokemonListItem] = []
-  private var selectedIndexPath: IndexPath?
+  // MARK: - Properties
   
   private var dataManager: DataManagerFacade {
     guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -21,6 +18,9 @@ class PokemonListViewController: UITableViewController {
     }
     return delegate.dataManager
   }
+  
+  private var pokemonListItems: [PokemonListItem] = []
+  private var selectedIndexPath: IndexPath?
   
   private var currentPage = 1
   private var isLoading = false
@@ -142,18 +142,6 @@ extension PokemonListViewController {
     cellForRowAt indexPath: IndexPath
   ) -> UITableViewCell {
     
-    return cellForRow(
-      at: indexPath,
-      in: tableView,
-      isLoading: isLoading)
-  }
-  
-  private func cellForRow(
-    at indexPath: IndexPath,
-    in tableView: UITableView,
-    isLoading: Bool
-  ) -> UITableViewCell {
-    
     if indexPath.section == 1 {
       // LoaderTableViewCell
       
@@ -215,12 +203,12 @@ extension PokemonListViewController {
     _ tableView: UITableView,
     heightForRowAt indexPath: IndexPath
   ) -> CGFloat {
-
+    
     if indexPath.section == 1 {
       // LoaderTableViewCell
       let isRefreshing = refreshControl?.isRefreshing ?? false
       return !isRefreshing && self.isLoading ? 100 : 0
-    
+      
     } else if indexPath.section == 2 {
       // NoDataCell
       return 500
@@ -235,7 +223,10 @@ extension PokemonListViewController {
 
 extension PokemonListViewController: UITableViewDataSourcePrefetching {
   
-  func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+  func tableView(
+    _ tableView: UITableView,
+    prefetchRowsAt indexPaths: [IndexPath]
+  ) {
     guard indexPaths.contains(where: { $0.section == 1 }) else { return }
     requestData(forPage: currentPage)
   }
