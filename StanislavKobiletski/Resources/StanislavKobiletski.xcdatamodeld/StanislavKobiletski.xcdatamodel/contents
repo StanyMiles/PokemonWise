@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDAbility" representedClassName=".CDAbility" syncable="YES">
+        <attribute name="isHidden" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="slot" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="pokemons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="abilities" inverseEntity="CDPokemon"/>
+    </entity>
+    <entity name="CDListItem" representedClassName=".CDListItem" syncable="YES">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="position" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="urlString" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="urlString"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="CDMove" representedClassName=".CDMove" syncable="YES">
+        <attribute name="name" attributeType="String"/>
+        <relationship name="pokemons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="moves" inverseEntity="CDPokemon"/>
+    </entity>
+    <entity name="CDPokemon" representedClassName=".CDPokemon" syncable="YES">
+        <attribute name="baseExperience" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="height" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="species" attributeType="String"/>
+        <attribute name="urlString" attributeType="String"/>
+        <attribute name="weight" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="abilities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDAbility" inverseName="pokemons" inverseEntity="CDAbility"/>
+        <relationship name="moves" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDMove" inverseName="pokemons" inverseEntity="CDMove"/>
+        <relationship name="sprites" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSprite" inverseName="pokemon" inverseEntity="CDSprite"/>
+        <relationship name="stats" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDStat" inverseName="pokemon" inverseEntity="CDStat"/>
+        <relationship name="types" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDType" inverseName="pokemon" inverseEntity="CDType"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+                <constraint value="urlString"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="CDSprite" representedClassName=".CDSprite" syncable="YES">
+        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="isFemale" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="urlString" attributeType="String"/>
+        <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="sprites" inverseEntity="CDPokemon"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="urlString"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="CDStat" representedClassName=".CDStat" syncable="YES">
+        <attribute name="baseStat" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="effort" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="stats" inverseEntity="CDPokemon"/>
+    </entity>
+    <entity name="CDType" representedClassName=".CDType" syncable="YES">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="slot" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="types" inverseEntity="CDPokemon"/>
+    </entity>
+    <elements>
+        <element name="CDAbility" positionX="-299.76953125" positionY="-367.3203125" width="128" height="103"/>
+        <element name="CDListItem" positionX="-36" positionY="-162" width="128" height="88"/>
+        <element name="CDMove" positionX="325.5859375" positionY="-214.59375" width="128" height="73"/>
+        <element name="CDPokemon" positionX="35.546875" positionY="-319.92578125" width="128" height="223"/>
+        <element name="CDSprite" positionX="-298.4453125" positionY="-230.44140625" width="128" height="118"/>
+        <element name="CDStat" positionX="323.84765625" positionY="-121.828125" width="128" height="103"/>
+        <element name="CDType" positionX="-295.9765625" positionY="-92.30078125" width="128" height="88"/>
+    </elements>
+</model>

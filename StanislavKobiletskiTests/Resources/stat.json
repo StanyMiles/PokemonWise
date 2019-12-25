@@ -1,0 +1,8 @@
+{
+  "base_stat": 45,
+  "effort": 0,
+  "stat": {
+    "name": "speed",
+    "url": "https://pokeapi.co/api/v2/stat/6/"
+  }
+}
