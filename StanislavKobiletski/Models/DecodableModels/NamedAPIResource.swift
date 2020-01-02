@@ -13,4 +13,15 @@ struct NamedAPIResource {
   let url: String
 }
 
+// MARK: - Decodable
+
 extension NamedAPIResource: Decodable { }
+
+// MARK: - Equatable
+
+extension NamedAPIResource: Equatable {
+  
+  static func == (lhs: NamedAPIResource, rhs: NamedAPIResource) -> Bool {
+    lhs.name == rhs.name && lhs.url == rhs.url
+  }
+}
