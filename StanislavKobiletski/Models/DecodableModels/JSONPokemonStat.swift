@@ -14,6 +14,8 @@ struct JSONPokemonStat {
   let baseStat: Int
 }
 
+// MARK: - Decodable
+
 extension JSONPokemonStat: Decodable {
   enum CodingKeys: String, CodingKey {
     case stat

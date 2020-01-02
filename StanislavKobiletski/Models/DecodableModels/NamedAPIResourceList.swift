@@ -15,4 +15,6 @@ struct NamedAPIResourceList {
   let results: [NamedAPIResource]
 }
 
+// MARK: - Decodable
+
 extension NamedAPIResourceList: Decodable { }

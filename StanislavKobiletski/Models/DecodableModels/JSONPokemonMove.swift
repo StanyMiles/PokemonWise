@@ -12,4 +12,6 @@ struct JSONPokemonMove {
   let move: NamedAPIResource
 }
 
+// MARK: - Decodable
+
 extension JSONPokemonMove: Decodable { }

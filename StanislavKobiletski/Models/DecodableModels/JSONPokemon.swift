@@ -22,6 +22,8 @@ struct JSONPokemon {
   let types: [JSONPokemonType]
 }
 
+// MARK: - Decodable
+
 extension JSONPokemon: Decodable {
   enum CodingKeys: String, CodingKey {
     case id
@@ -35,5 +37,14 @@ extension JSONPokemon: Decodable {
     case species
     case stats
     case types
+  }
+}
+
+// MARK: - Equatable
+
+extension JSONPokemon: Equatable {
+  
+  static func == (lhs: JSONPokemon, rhs: JSONPokemon) -> Bool {
+    lhs.id == rhs.id
   }
 }

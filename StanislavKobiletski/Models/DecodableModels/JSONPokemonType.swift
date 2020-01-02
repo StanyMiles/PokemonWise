@@ -13,4 +13,6 @@ struct JSONPokemonType {
   let type: NamedAPIResource
 }
 
+// MARK: - Decodable
+
 extension JSONPokemonType: Decodable { }

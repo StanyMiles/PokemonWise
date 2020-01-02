@@ -42,14 +42,17 @@ class NetworkingClientTests: XCTestCase {
   // MARK: - Given
   
   var getPokemonsURL: URL {
+    let offset = (firstPage - 1) * standardLimit
     let queryItems = [
-      URLQueryItem(name: NetworkingClient.Keys.offset, value: String(firstPage)),
+      URLQueryItem(name: NetworkingClient.Keys.offset, value: String(offset)),
       URLQueryItem(name: NetworkingClient.Keys.limit, value: String(standardLimit)),
     ]
     var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
     urlComponents.queryItems = queryItems
     return urlComponents.url!
   }
+  
+  let singlePokemonURL = URL(string: "https://example.com/api/v1/pokemon/1/")!
   
   // MARK: - When
   
@@ -136,6 +139,89 @@ class NetworkingClientTests: XCTestCase {
       exp.fulfill()
       
     } as! MockURLSessionDataTask
+    
+    let response = HTTPURLResponse(
+      url: getPokemonsURL,
+      statusCode: statusCode,
+      httpVersion: nil,
+      headerFields: nil)
+    
+    mockTask.completionHandler(data, response, error)
+    
+    // then
+    waitForExpectations(timeout: 0.2) { _ in
+      XCTAssertTrue(thread.isMainThread, line: line)
+    }
+  }
+  
+  func whenRequestSinglePokemon() -> MockURLSessionDataTask {
+    let mockTask = sut.requestSinglePokemon(
+      with: singlePokemonURL
+    ) { _ in } as! MockURLSessionDataTask
+    return mockTask
+  }
+  
+  func whenRequestSinglePokemon(
+    data: Data? = nil,
+    statusCode: Int = 200,
+    error: Error? = nil
+  ) -> (calledCompletion: Bool, pokemon: JSONPokemon?, error: Error?) {
+    
+    let response = HTTPURLResponse(
+      url: getPokemonsURL,
+      statusCode: statusCode,
+      httpVersion: nil,
+      headerFields: nil)
+    
+    var calledCompletion = false
+    var receivedPokemons: JSONPokemon?
+    var receivedError: Error?
+    
+    let mockTask = sut.requestSinglePokemon(
+      with: singlePokemonURL
+    ) { result in
+      
+      calledCompletion = true
+      
+      switch result {
+      case .success(let pokemons):
+        receivedPokemons = pokemons
+      case .failure(let error):
+        receivedError = error as NSError?
+      }
+      
+      } as! MockURLSessionDataTask
+    
+    mockTask.completionHandler(data, response, error)
+    
+    return (calledCompletion, receivedPokemons, receivedError)
+  }
+  
+  func verifyRequestSinglePokemonDispatchedToMain(
+    data: Data? = nil,
+    statusCode: Int = 200,
+    error: Error? = nil,
+    line: UInt = #line
+  ) throws {
+    
+    mockSession.givenDispatchQueue()
+    sut = NetworkingClient(
+      baseURL: baseURL,
+      session: mockSession,
+      responseQueue: .main)
+    
+    let exp = expectation(description: "Completion wasn't called")
+    
+    // when
+    var thread: Thread!
+    let mockTask = sut.requestSinglePokemon(
+      with: singlePokemonURL
+    ) { _ in
+      
+      thread = Thread.current
+      exp.fulfill()
+      
+      } as! MockURLSessionDataTask
     
     let response = HTTPURLResponse(
       url: getPokemonsURL,
@@ -342,5 +428,140 @@ class NetworkingClientTests: XCTestCase {
   
   func test_requestPokemons_givenNoData_dispatchesToResponseQueue() throws {
     try verifyRequestPokemonsDispatchedToMain(statusCode: 200)
+  }
+  
+  func test_requestSinglePokemon_callsResumeOnTask() {
+    // when
+    let mockTask = whenRequestSinglePokemon()
+    
+    // then
+    XCTAssertTrue(mockTask.calledResume)
+  }
+
+  func test_requestSinglePokemon_callsExpectedURL() {
+    // when
+    let mockTask = whenRequestSinglePokemon()
+
+    // then
+    XCTAssertEqual(mockTask.url, singlePokemonURL)
+  }
+
+  func test_requestSinglePokemon_givenResponseStatusCode500_callsCompletion() throws {
+    // given
+    let expectedError = NetworkingClient.Error.badResponse
+
+    // when
+    let result = whenRequestSinglePokemon(statusCode: 500)
+
+    // then
+    XCTAssertTrue(result.calledCompletion)
+    XCTAssertNil(result.pokemon)
+
+    let actualError = try XCTUnwrap(result.error as? NetworkingClient.Error?)
+    XCTAssertEqual(actualError, expectedError)
+  }
+
+  func test_requestSinglePokemon_givenError_callsCompletionWithError() throws {
+    // given
+    let expectedError = NSError(domain: "com.PokemonWise", code: 42)
+
+    // when
+    let result = whenRequestSinglePokemon(error: expectedError)
+
+    // then
+    XCTAssertTrue(result.calledCompletion)
+    XCTAssertNil(result.pokemon)
+
+    let actualError = try XCTUnwrap(result.error as NSError?)
+    XCTAssertEqual(actualError, expectedError)
+  }
+
+  func test_requestSinglePokemon_givenValidJSON_callsCompletionWithPokemon() throws {
+    // given
+    let data = try Data.fromJSON(fileName: "SinglePokemon_Response")
+
+    let decoder = JSONDecoder()
+    let pokemon = try decoder.decode(
+      JSONPokemon.self,
+      from: data)
+
+    // when
+    let result = whenRequestSinglePokemon(data: data)
+
+    // then
+    XCTAssertTrue(result.calledCompletion)
+    XCTAssertNil(result.error)
+    XCTAssertEqual(result.pokemon, pokemon)
+  }
+
+  func test_requestSinglePokemon_givenInvalidJSON_callsCompletionWithError() throws {
+    // given
+    let data = try Data.fromJSON(fileName: "SinglePokemon_MissingProperties_Response")
+
+    var expectedError: NSError!
+    let decoder = JSONDecoder()
+    do {
+      _ = try decoder.decode(JSONPokemon.self, from: data)
+    } catch {
+      expectedError = error as NSError
+    }
+
+    // when
+    let result = whenRequestSinglePokemon(data: data)
+
+    // then
+    XCTAssertTrue(result.calledCompletion)
+    XCTAssertNil(result.pokemon)
+
+    let actualError = try XCTUnwrap(result.error as NSError?)
+    XCTAssertEqual(actualError.domain, expectedError.domain)
+    XCTAssertEqual(actualError.code, expectedError.code)
+  }
+
+  func test_requestSinglePokemon_givenNoData_callsCompletionWithError() throws {
+    // given
+    let expectedError = NetworkingClient.Error.noData
+
+    // when
+    let result = whenRequestSinglePokemon(statusCode: 200)
+
+    // then
+    XCTAssertTrue(result.calledCompletion)
+    XCTAssertNil(result.pokemon)
+
+    let actualError = try XCTUnwrap(result.error as? NetworkingClient.Error?)
+    XCTAssertEqual(actualError, expectedError)
+  }
+
+  func test_requestSinglePokemon_givenHTTPStatusError_dispatchesToResponseQueue() throws {
+    try verifyRequestSinglePokemonDispatchedToMain(statusCode: 500)
+  }
+
+  func test_requestSinglePokemon_givenError_dispatchesToResponseQueue() throws {
+    // given
+    let error = NSError(domain: "com.PokemonWise", code: 42)
+
+    // then
+    try verifyRequestSinglePokemonDispatchedToMain(error: error)
+  }
+
+  func test_requestSinglePokemon_givenGoodResponse_dispatchesToResponseQueue() throws {
+    // given
+    let data = try Data.fromJSON(fileName: "SinglePokemon_Response")
+
+    // then
+    try verifyRequestSinglePokemonDispatchedToMain(data: data)
+  }
+
+  func test_requestSinglePokemon_givenInvalidResponse_dispatchesToResponseQueue() throws {
+    // given
+    let data = try Data.fromJSON(fileName: "SinglePokemon_MissingProperties_Response")
+
+    // then
+    try verifyRequestSinglePokemonDispatchedToMain(data: data)
+  }
+
+  func test_requestSinglePokemon_givenNoData_dispatchesToResponseQueue() throws {
+    try verifyRequestSinglePokemonDispatchedToMain(statusCode: 200)
   }
 }

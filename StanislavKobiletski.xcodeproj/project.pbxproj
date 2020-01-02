@@ -60,6 +60,8 @@
 		93D2ECDC23BDCE180077E0D4 /* Pokemons_Response.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D2ECDB23BDCE180077E0D4 /* Pokemons_Response.json */; };
 		93D2ECDF23BDCE550077E0D4 /* Data+JSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D2ECDE23BDCE550077E0D4 /* Data+JSONFile.swift */; };
 		93D2ECE123BDCF010077E0D4 /* Pokemons_MissingProperties_Response.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D2ECE023BDCF010077E0D4 /* Pokemons_MissingProperties_Response.json */; };
+		93D2ECE323BDF9A80077E0D4 /* SinglePokemon_Response.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D2ECE223BDF9A80077E0D4 /* SinglePokemon_Response.json */; };
+		93D2ECE523BDF9C40077E0D4 /* SinglePokemon_MissingProperties_Response.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D2ECE423BDF9C40077E0D4 /* SinglePokemon_MissingProperties_Response.json */; };
 		93D3251723AF0F5C006C0BC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3251623AF0F5C006C0BC5 /* AppDelegate.swift */; };
 		93D3251923AF0F5C006C0BC5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3251823AF0F5C006C0BC5 /* SceneDelegate.swift */; };
 		93D3251B23AF0F5C006C0BC5 /* PokemonListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3251A23AF0F5C006C0BC5 /* PokemonListViewController.swift */; };
@@ -149,6 +151,8 @@
 		93D2ECDB23BDCE180077E0D4 /* Pokemons_Response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Pokemons_Response.json; sourceTree = "<group>"; };
 		93D2ECDE23BDCE550077E0D4 /* Data+JSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+JSONFile.swift"; sourceTree = "<group>"; };
 		93D2ECE023BDCF010077E0D4 /* Pokemons_MissingProperties_Response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Pokemons_MissingProperties_Response.json; sourceTree = "<group>"; };
+		93D2ECE223BDF9A80077E0D4 /* SinglePokemon_Response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SinglePokemon_Response.json; sourceTree = "<group>"; };
+		93D2ECE423BDF9C40077E0D4 /* SinglePokemon_MissingProperties_Response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SinglePokemon_MissingProperties_Response.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		93D3251323AF0F5C006C0BC5 /* PokemonWise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonWise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93D3251623AF0F5C006C0BC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93D3251823AF0F5C006C0BC5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 			children = (
 				93D2ECE023BDCF010077E0D4 /* Pokemons_MissingProperties_Response.json */,
 				93D2ECDB23BDCE180077E0D4 /* Pokemons_Response.json */,
+				93D2ECE423BDF9C40077E0D4 /* SinglePokemon_MissingProperties_Response.json */,
+				93D2ECE223BDF9A80077E0D4 /* SinglePokemon_Response.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -565,11 +571,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D2ECE323BDF9A80077E0D4 /* SinglePokemon_Response.json in Resources */,
 				9303B8FF23AFAF0C0050A4B5 /* move.json in Resources */,
 				9303B90123AFAF320050A4B5 /* sprites.json in Resources */,
 				9303B90523AFAF5C0050A4B5 /* type.json in Resources */,
 				9303B8FD23AFAEE20050A4B5 /* ability.json in Resources */,
 				93D2ECE123BDCF010077E0D4 /* Pokemons_MissingProperties_Response.json in Resources */,
+				93D2ECE523BDF9C40077E0D4 /* SinglePokemon_MissingProperties_Response.json in Resources */,
 				9303B91623B071720050A4B5 /* named_api_resource.json in Resources */,
 				93D3258123AF4445006C0BC5 /* single_pokemon.json in Resources */,
 				93D2ECDC23BDCE180077E0D4 /* Pokemons_Response.json in Resources */,

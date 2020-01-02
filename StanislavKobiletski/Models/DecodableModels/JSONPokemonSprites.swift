@@ -19,6 +19,8 @@ struct JSONPokemonSprites {
   let backShinyFemale: String?
 }
 
+// MARK: - Decodable
+
 extension JSONPokemonSprites: Decodable {
   enum CodingKeys: String, CodingKey {
     case frontDefault     = "front_default"

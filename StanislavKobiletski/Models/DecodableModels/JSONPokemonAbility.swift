@@ -14,6 +14,8 @@ struct JSONPokemonAbility {
   let ability: NamedAPIResource
 }
 
+// MARK: - Decodable
+
 extension JSONPokemonAbility: Decodable {
   enum CodingKeys: String, CodingKey {
     case isHidden = "is_hidden"

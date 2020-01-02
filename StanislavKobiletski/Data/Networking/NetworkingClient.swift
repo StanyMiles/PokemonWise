@@ -28,14 +28,19 @@ struct NetworkingClient {
       throw Error.incorrectPage
     }
     
+    let offset = (page - 1) * limit
+    
     let queryItems = [
-      URLQueryItem(name: Keys.offset, value: String(page)),
+      URLQueryItem(name: Keys.offset, value: String(offset)),
       URLQueryItem(name: Keys.limit, value: String(limit)),
     ]
     
-    var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
+    var urlComponents = URLComponents(
+      url: baseURL,
+      resolvingAgainstBaseURL: false)
     urlComponents?.queryItems = queryItems
-    // TODO: - Test broken URL somehow
+    
+    #warning("Test for broken URL")
     let getPokemonsURL = urlComponents!.url!
     
     let dataTask = session.dataTask(
@@ -87,7 +92,60 @@ struct NetworkingClient {
     
     return dataTask
   }
-
+  
+  func requestSinglePokemon(
+    with url: URL,
+    completion: @escaping (Result<JSONPokemon, Swift.Error>) -> Void
+  ) -> URLSessionDataTask {
+    
+    let dataTask = session.dataTask(
+      with: url
+    ) { data, response, error in
+      
+      guard let response = response as? HTTPURLResponse,
+        response.statusCode == 200 else {
+          self.dispatchResult(
+            .failure(Error.badResponse),
+            completion: completion)
+          return
+      }
+      
+      if let error = error {
+        self.dispatchResult(
+          .failure(error),
+          completion: completion)
+        return
+      }
+      
+      guard let data = data else {
+        self.dispatchResult(
+          .failure(Error.noData),
+          completion: completion)
+        return
+      }
+      
+      let decoder = JSONDecoder()
+      do {
+        let pokemon = try decoder.decode(
+          JSONPokemon.self,
+          from: data)
+        self.dispatchResult(
+          .success(pokemon),
+          completion: completion)
+        
+      } catch {
+        
+        self.dispatchResult(
+          .failure(error),
+          completion: completion)
+      }
+    }
+    
+    dataTask.resume()
+    
+    return dataTask
+  }
+    
   // MARK: - Helpers
   
   private func dispatchResult<Type>(
