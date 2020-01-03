@@ -239,6 +239,30 @@ class NetworkingClientTests: XCTestCase {
   
   // MARK: - Tests
   
+  func test_shared_setsBaseURL() {
+    // given
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    
+    // then
+    XCTAssertEqual(NetworkingClient.shared.baseURL, baseURL)
+  }
+  
+  func test_shared_setsSession() {
+    // given
+    let session = URLSession.shared
+    
+    // then
+    XCTAssertEqual(NetworkingClient.shared.session, session)
+  }
+  
+  func test_shared_setsResponseQueue() {
+    // given
+    let responseQueue = DispatchQueue.main
+    
+    // then
+    XCTAssertEqual(NetworkingClient.shared.responseQueue, responseQueue)
+  }
+  
   func test_init_sets_baseURL() {
     XCTAssertEqual(sut.baseURL, baseURL)
   }

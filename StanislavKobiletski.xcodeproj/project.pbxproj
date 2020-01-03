@@ -242,8 +242,8 @@
 				9303B8EF23AFA6680050A4B5 /* CoreDataModelsTests.swift */,
 				93C80ED123B30B7D00B05045 /* DataManagerFacadeTests.swift */,
 				9303B90623AFB4D80050A4B5 /* ModelsTests.swift */,
-				93D3253023AF0F60006C0BC5 /* NetworkManagerTests.swift */,
 				93D2ECD223BD91DF0077E0D4 /* NetworkingClientTests.swift */,
+				93D3253023AF0F60006C0BC5 /* NetworkManagerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

@@ -16,6 +16,11 @@ struct NetworkingClient {
   let session: URLSession
   let responseQueue: DispatchQueue?
   
+  static let shared = NetworkingClient(
+    baseURL: URL(string: "https://pokeapi.co/api/v2/pokemon/")!,
+    session: .shared,
+    responseQueue: .main)
+  
   // MARK: - Funcs
   
   func requestPokemons(
