@@ -37,4 +37,9 @@ class MockURLSessionDataTask: URLSessionDataTask {
   override func resume() {
     calledResume = true
   }
+  
+  var calledCancel = false
+  override func cancel() {
+    calledCancel = true
+  }
 }

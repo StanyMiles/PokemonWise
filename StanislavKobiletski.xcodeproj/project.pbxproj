@@ -41,6 +41,8 @@
 		9303B91323B06FF50050A4B5 /* CDListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B91123B06FF50050A4B5 /* CDListItem+CoreDataClass.swift */; };
 		9303B91423B06FF50050A4B5 /* CDListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B91223B06FF50050A4B5 /* CDListItem+CoreDataProperties.swift */; };
 		9303B91623B071720050A4B5 /* named_api_resource.json in Resources */ = {isa = PBXBuildFile; fileRef = 9303B91523B071720050A4B5 /* named_api_resource.json */; };
+		9379614823C3622C0001D14B /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379614723C3622C0001D14B /* ImageClient.swift */; };
+		9379614A23C362470001D14B /* ImageClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379614923C362470001D14B /* ImageClientTests.swift */; };
 		93C80EB923B09E0500B05045 /* CellIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C80EB823B09E0500B05045 /* CellIdentifier.swift */; };
 		93C80EBB23B09F4300B05045 /* DataManagerFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C80EBA23B09F4300B05045 /* DataManagerFacade.swift */; };
 		93C80EBE23B0AD7B00B05045 /* PokemonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C80EBD23B0AD7B00B05045 /* PokemonViewController.swift */; };
@@ -132,6 +134,8 @@
 		9303B91123B06FF50050A4B5 /* CDListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDListItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		9303B91223B06FF50050A4B5 /* CDListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDListItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		9303B91523B071720050A4B5 /* named_api_resource.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = named_api_resource.json; sourceTree = "<group>"; };
+		9379614723C3622C0001D14B /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
+		9379614923C362470001D14B /* ImageClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClientTests.swift; sourceTree = "<group>"; };
 		93C80EB823B09E0500B05045 /* CellIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifier.swift; sourceTree = "<group>"; };
 		93C80EBA23B09F4300B05045 /* DataManagerFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerFacade.swift; sourceTree = "<group>"; };
 		93C80EBD23B0AD7B00B05045 /* PokemonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +248,7 @@
 				9303B90623AFB4D80050A4B5 /* ModelsTests.swift */,
 				93D2ECD223BD91DF0077E0D4 /* NetworkingClientTests.swift */,
 				93D3253023AF0F60006C0BC5 /* NetworkManagerTests.swift */,
+				9379614923C362470001D14B /* ImageClientTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 		93D3256123AF164E006C0BC5 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9379614723C3622C0001D14B /* ImageClient.swift */,
 				93D2ECD023BD91C30077E0D4 /* NetworkingClient.swift */,
 				93D3257623AF2745006C0BC5 /* NetworkingManager.swift */,
 			);
@@ -607,6 +613,7 @@
 				9303B90A23B066BC0050A4B5 /* CoreDataManager.swift in Sources */,
 				93C80EC823B1CB8100B05045 /* PokemonView.swift in Sources */,
 				93C80EC223B10A4100B05045 /* LoaderTableViewCell.swift in Sources */,
+				9379614823C3622C0001D14B /* ImageClient.swift in Sources */,
 				93D3252123AF0F5C006C0BC5 /* StanislavKobiletski.xcdatamodeld in Sources */,
 				93D3255E23AF1330006C0BC5 /* JSONPokemonAbility.swift in Sources */,
 				9303B91323B06FF50050A4B5 /* CDListItem+CoreDataClass.swift in Sources */,
@@ -654,6 +661,7 @@
 				93C80EC023B0B60100B05045 /* CoreDataManagerTests.swift in Sources */,
 				93D2ECD723BD95ED0077E0D4 /* MockURLSessionDataTask.swift in Sources */,
 				9303B90723AFB4D80050A4B5 /* ModelsTests.swift in Sources */,
+				9379614A23C362470001D14B /* ImageClientTests.swift in Sources */,
 				93C80ED223B30B7D00B05045 /* DataManagerFacadeTests.swift in Sources */,
 				9303B8F723AFA8970050A4B5 /* URLSessionMock.swift in Sources */,
 				9303B8F523AFA8700050A4B5 /* DataTaskMock.swift in Sources */,
