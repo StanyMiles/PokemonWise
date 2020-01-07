@@ -17,6 +17,8 @@ class CoreDataStackTests: XCTestCase {
   var sut: CoreDataStack!
   var modelName: String!
   var storeType: String!
+  var context: NSManagedObjectContext!
+  var privateContext: NSManagedObjectContext!
   
   // MARK: - Lyfecycle
   
@@ -27,13 +29,22 @@ class CoreDataStackTests: XCTestCase {
     sut = CoreDataStack(
       modelName: modelName,
       persistentStoreType: storeType)
+    context = sut.mainManagedObjectContext
   }
   
   override func tearDown() {
     sut = nil
     modelName = nil
     storeType = nil
+    context = nil
+    privateContext = nil
     super.tearDown()
+  }
+  
+  // MARK: - Given
+  
+  func givenPrivateContext() {
+    privateContext = sut.makePrivateChildContext()
   }
   
   // MARK: - Tests
@@ -64,7 +75,6 @@ class CoreDataStackTests: XCTestCase {
   
   func test_saveChanged_givenItem_savesMainManagedObjectContext() {
     // given
-    let context = sut.mainManagedObjectContext
     let item = CDListItem(context: context)
     item.name = "name"
     item.urlString = "http://example.com"
@@ -78,7 +88,6 @@ class CoreDataStackTests: XCTestCase {
   
   func test_saveChanged_givenItemWithEmptyProperties_doesntSaveMainManagedObjectContext() {
     // given
-    let context = sut.mainManagedObjectContext
     let _ = CDListItem(context: context)
     
     // when
@@ -87,4 +96,34 @@ class CoreDataStackTests: XCTestCase {
     // then
     XCTAssertTrue(context.hasChanges)
   }
+  
+  func test_mainManagedObjectContext_concurrencyTypeIsMainQueueConcurrencyType() {
+    XCTAssertEqual(context.concurrencyType, .mainQueueConcurrencyType)
+  }
+  
+  func test_makePrivateChildContext_setsMainContextAsParent() {
+    // given
+    givenPrivateContext()
+    
+    // then
+    XCTAssertEqual(privateContext.parent, context)
+  }
+  
+  func test_makePrivateChildContext_concurrencyTypeIsPrivate() {
+    // given
+    givenPrivateContext()
+    
+    // then
+    XCTAssertEqual(privateContext.concurrencyType, .privateQueueConcurrencyType)
+  }
+  
+  #warning("test mergePolicy")
+  
+//  func test_makePrivateChildContext_setsNSMergeByPropertyObjectTrumpMergePolicy() {
+//    // given
+//    let privateContext = sut.makePrivateChildContext()
+//    privateContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//    // then
+//    //    XCTAssertTrue(privateContext.mergePolicy === NSMergeByPropertyObjectTrumpMergePolicy)
+//  }
 }
