@@ -12,8 +12,8 @@ class DataManagerFacade {
   
   // MARK: - Properties
   
-  private let coreDataManager: CoreDataManager
-  private let networkManager: NetworkingManager
+  let coreDataManager: CoreDataManager
+  let networkManager: NetworkingManager
   
   // MARK: - Initializer
   
@@ -104,7 +104,8 @@ class DataManagerFacade {
     networkManager.requestData(forImageUrl: urlString) { [weak self] result in
       guard let self = self else {
         print("Object deallocated")
-        return }
+        return
+      }
       
       switch result {
       case .success(let data):
