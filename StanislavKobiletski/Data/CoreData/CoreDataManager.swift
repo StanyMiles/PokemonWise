@@ -12,7 +12,7 @@ struct CoreDataManager {
   
   // MARK: - Properties
   
-  private let stack: CoreDataStack
+  let stack: CoreDataStack
   
   // MARK: - Initializer
   
