@@ -13,11 +13,11 @@ class CoreDataStack {
   // MARK: - Properties
   
   /// Storing NSManagedObjectModel here, because during tests
-  /// it gets loaded multiple times and CoreData doesn't like that
+  /// it gets loaded multiple times per application launch and CoreData doesn't like that
   private static var loadedManagedObjectModel: NSManagedObjectModel?
   
-  private let modelName: String
-  private let persistentStoreType: String
+  let modelName: String
+  let persistentStoreType: String
   
   private var persistentStoreURL: URL {
     let storeName = "\(modelName).sqlite"
@@ -83,7 +83,7 @@ class CoreDataStack {
   // MARK: - Initializer
   
   init(
-    modelName: String = "StanislavKobiletski",
+    modelName: String = "PokemonWise",
     persistentStoreType: String = NSSQLiteStoreType
   ) {
     self.modelName = modelName
@@ -99,9 +99,11 @@ class CoreDataStack {
           try self.mainManagedObjectContext.save()
         }
       } catch {
+        #if DEBUG
         let saveError = error as NSError
         print("Unable to Save Changes of Main Managed Object Context")
         print("\(saveError), \(saveError.localizedDescription)")
+        #endif
       }
     }
     
@@ -111,9 +113,11 @@ class CoreDataStack {
           try self.privateManagedObjectContext.save()
         }
       } catch {
+        #if DEBUG
         let saveError = error as NSError
         print("Unable to Save Changes of Private Managed Object Context")
         print("\(saveError), \(saveError.localizedDescription)")
+        #endif
       }
     }
   }
