@@ -92,6 +92,13 @@ class CoreDataStack {
   
   // MARK: - Funcs
   
+  public func makePrivateChildContext() -> NSManagedObjectContext {
+    let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+    privateContext.parent = mainManagedObjectContext
+    privateContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    return privateContext
+  }
+  
   public func saveChanges() {
     mainManagedObjectContext.performAndWait {
       do {
