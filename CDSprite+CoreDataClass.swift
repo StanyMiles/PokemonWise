@@ -12,6 +12,20 @@ import CoreData
 
 public class CDSprite: NSManagedObject {
   
+  // MARK: - Proprteies
+  
+  var name: String {
+    get { cdName ?? "no name" }
+    set { cdName = newValue }
+  }
+  
+  var urlString: String {
+    get { cdUrlString ?? "no url" }
+    set { cdUrlString = newValue }
+  }
+  
+  // MARK: - Funcs
+  
   static func initialize(
     with sprites: JSONPokemonSprites,
     in context: NSManagedObjectContext

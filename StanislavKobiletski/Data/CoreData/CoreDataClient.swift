@@ -8,7 +8,7 @@
 
 import CoreData
 
-struct CoreDataClient {
+class CoreDataClient {
   
   // MARK: - Properties
   
@@ -97,6 +97,10 @@ struct CoreDataClient {
     let context = stack.mainManagedObjectContext
     let listItems = try context.fetch(fetchRequest)
     
+    guard !listItems.isEmpty else {
+      throw Error.noData
+    }
+    
     return listItems
   }
   
@@ -107,7 +111,7 @@ struct CoreDataClient {
     let fetchRequest: NSFetchRequest<CDPokemon> = CDPokemon.fetchRequest()
     fetchRequest.fetchLimit = 1
     fetchRequest.predicate = NSPredicate(
-      format: #keyPath(CDPokemon.urlString) + " == %@",
+      format: #keyPath(CDPokemon.cdUrlString) + " == %@",
       urlString)
     
     let context = stack.mainManagedObjectContext
@@ -128,7 +132,7 @@ struct CoreDataClient {
     let fetchRequest: NSFetchRequest<CDSprite> = CDSprite.fetchRequest()
     fetchRequest.fetchLimit = 1
     fetchRequest.predicate = NSPredicate(
-      format: #keyPath(CDSprite.urlString) + " == %@",
+      format: #keyPath(CDSprite.cdUrlString) + " == %@",
       urlString)
     
     let context = context ?? stack.mainManagedObjectContext

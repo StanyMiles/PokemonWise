@@ -27,16 +27,13 @@
 		9303B8F023AFA6680050A4B5 /* CoreDataModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B8EF23AFA6680050A4B5 /* CoreDataModelsTests.swift */; };
 		9303B8F323AFA7D00050A4B5 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B8F223AFA7D00050A4B5 /* MockData.swift */; };
 		9303B8F523AFA8700050A4B5 /* DataTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B8F423AFA8700050A4B5 /* DataTaskMock.swift */; };
-		9303B8F723AFA8970050A4B5 /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B8F623AFA8970050A4B5 /* URLSessionMock.swift */; };
 		9303B8F923AFA8EB0050A4B5 /* DataTaskDataMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B8F823AFA8EB0050A4B5 /* DataTaskDataMock.swift */; };
-		9303B8FB23AFA90A0050A4B5 /* URLSessionDataMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B8FA23AFA90A0050A4B5 /* URLSessionDataMock.swift */; };
 		9303B8FD23AFAEE20050A4B5 /* ability.json in Resources */ = {isa = PBXBuildFile; fileRef = 9303B8FC23AFAEE20050A4B5 /* ability.json */; };
 		9303B8FF23AFAF0C0050A4B5 /* move.json in Resources */ = {isa = PBXBuildFile; fileRef = 9303B8FE23AFAF0C0050A4B5 /* move.json */; };
 		9303B90123AFAF320050A4B5 /* sprites.json in Resources */ = {isa = PBXBuildFile; fileRef = 9303B90023AFAF320050A4B5 /* sprites.json */; };
 		9303B90323AFAF490050A4B5 /* stat.json in Resources */ = {isa = PBXBuildFile; fileRef = 9303B90223AFAF490050A4B5 /* stat.json */; };
 		9303B90523AFAF5C0050A4B5 /* type.json in Resources */ = {isa = PBXBuildFile; fileRef = 9303B90423AFAF5C0050A4B5 /* type.json */; };
 		9303B90723AFB4D80050A4B5 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B90623AFB4D80050A4B5 /* ModelsTests.swift */; };
-		9303B90A23B066BC0050A4B5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B90923B066BC0050A4B5 /* CoreDataManager.swift */; };
 		9303B90C23B06EB10050A4B5 /* PokemonListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B90B23B06EB10050A4B5 /* PokemonListItem.swift */; };
 		9303B91323B06FF50050A4B5 /* CDListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B91123B06FF50050A4B5 /* CDListItem+CoreDataClass.swift */; };
 		9303B91423B06FF50050A4B5 /* CDListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B91223B06FF50050A4B5 /* CDListItem+CoreDataProperties.swift */; };
@@ -82,13 +79,12 @@
 		93D3255C23AF1318006C0BC5 /* JSONPokemonMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3255B23AF1318006C0BC5 /* JSONPokemonMove.swift */; };
 		93D3255E23AF1330006C0BC5 /* JSONPokemonAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3255D23AF1330006C0BC5 /* JSONPokemonAbility.swift */; };
 		93D3256023AF1344006C0BC5 /* JSONPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3255F23AF1344006C0BC5 /* JSONPokemon.swift */; };
-		93D3257723AF2745006C0BC5 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3257623AF2745006C0BC5 /* NetworkingManager.swift */; };
-		93D3257A23AF3CEB006C0BC5 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3257923AF3CEB006C0BC5 /* URLSessionProtocol.swift */; };
-		93D3257D23AF3D2A006C0BC5 /* URLSessionExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3257C23AF3D2A006C0BC5 /* URLSessionExtention.swift */; };
 		93D3257F23AF43FC006C0BC5 /* pokemons_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D3257E23AF43FC006C0BC5 /* pokemons_list.json */; };
 		93D3258123AF4445006C0BC5 /* single_pokemon.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D3258023AF4445006C0BC5 /* single_pokemon.json */; };
 		93D3258523AF5028006C0BC5 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3258423AF5028006C0BC5 /* CoreDataStack.swift */; };
 		93D3258823AF5B9C006C0BC5 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D3258723AF5B9C006C0BC5 /* Pokemon.swift */; };
+		93D8267623C5BB7900D51371 /* MockNetworkingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D8267523C5BB7900D51371 /* MockNetworkingClient.swift */; };
+		93D8267823C5BBE000D51371 /* NetworkRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D8267723C5BBE000D51371 /* NetworkRequestable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,16 +118,13 @@
 		9303B8EF23AFA6680050A4B5 /* CoreDataModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModelsTests.swift; sourceTree = "<group>"; };
 		9303B8F223AFA7D00050A4B5 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		9303B8F423AFA8700050A4B5 /* DataTaskMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskMock.swift; sourceTree = "<group>"; };
-		9303B8F623AFA8970050A4B5 /* URLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
 		9303B8F823AFA8EB0050A4B5 /* DataTaskDataMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskDataMock.swift; sourceTree = "<group>"; };
-		9303B8FA23AFA90A0050A4B5 /* URLSessionDataMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataMock.swift; sourceTree = "<group>"; };
 		9303B8FC23AFAEE20050A4B5 /* ability.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ability.json; sourceTree = "<group>"; };
 		9303B8FE23AFAF0C0050A4B5 /* move.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = move.json; sourceTree = "<group>"; };
 		9303B90023AFAF320050A4B5 /* sprites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sprites.json; sourceTree = "<group>"; };
 		9303B90223AFAF490050A4B5 /* stat.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = stat.json; sourceTree = "<group>"; };
 		9303B90423AFAF5C0050A4B5 /* type.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = type.json; sourceTree = "<group>"; };
 		9303B90623AFB4D80050A4B5 /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
-		9303B90923B066BC0050A4B5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9303B90B23B06EB10050A4B5 /* PokemonListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListItem.swift; sourceTree = "<group>"; };
 		9303B91123B06FF50050A4B5 /* CDListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDListItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		9303B91223B06FF50050A4B5 /* CDListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDListItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -181,13 +174,12 @@
 		93D3255B23AF1318006C0BC5 /* JSONPokemonMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPokemonMove.swift; sourceTree = "<group>"; };
 		93D3255D23AF1330006C0BC5 /* JSONPokemonAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPokemonAbility.swift; sourceTree = "<group>"; };
 		93D3255F23AF1344006C0BC5 /* JSONPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONPokemon.swift; sourceTree = "<group>"; };
-		93D3257623AF2745006C0BC5 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
-		93D3257923AF3CEB006C0BC5 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
-		93D3257C23AF3D2A006C0BC5 /* URLSessionExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtention.swift; sourceTree = "<group>"; };
 		93D3257E23AF43FC006C0BC5 /* pokemons_list.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pokemons_list.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		93D3258023AF4445006C0BC5 /* single_pokemon.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = single_pokemon.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		93D3258423AF5028006C0BC5 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		93D3258723AF5B9C006C0BC5 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		93D8267523C5BB7900D51371 /* MockNetworkingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkingClient.swift; sourceTree = "<group>"; };
+		93D8267723C5BBE000D51371 /* NetworkRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,8 +227,7 @@
 				9303B8F823AFA8EB0050A4B5 /* DataTaskDataMock.swift */,
 				9303B8F423AFA8700050A4B5 /* DataTaskMock.swift */,
 				9303B8F223AFA7D00050A4B5 /* MockData.swift */,
-				9303B8FA23AFA90A0050A4B5 /* URLSessionDataMock.swift */,
-				9303B8F623AFA8970050A4B5 /* URLSessionMock.swift */,
+				93D8267523C5BB7900D51371 /* MockNetworkingClient.swift */,
 				93D2ECD423BD958E0077E0D4 /* MockURLSession.swift */,
 				93D2ECD623BD95ED0077E0D4 /* MockURLSessionDataTask.swift */,
 			);
@@ -426,7 +417,6 @@
 			children = (
 				9379614723C3622C0001D14B /* ImageClient.swift */,
 				93D2ECD023BD91C30077E0D4 /* NetworkingClient.swift */,
-				93D3257623AF2745006C0BC5 /* NetworkingManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -434,7 +424,7 @@
 		93D3257823AF3CCF006C0BC5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				93D3257923AF3CEB006C0BC5 /* URLSessionProtocol.swift */,
+				93D8267723C5BBE000D51371 /* NetworkRequestable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -443,7 +433,6 @@
 			isa = PBXGroup;
 			children = (
 				93C80EC923B1D4B500B05045 /* StringExtension.swift */,
-				93D3257C23AF3D2A006C0BC5 /* URLSessionExtention.swift */,
 				93C80ECD23B2254400B05045 /* UIViewExtension.swift */,
 			);
 			path = Extensions;
@@ -471,7 +460,6 @@
 			isa = PBXGroup;
 			children = (
 				9379614D23C42F200001D14B /* CoreDataClient.swift */,
-				9303B90923B066BC0050A4B5 /* CoreDataManager.swift */,
 				93D3258423AF5028006C0BC5 /* CoreDataStack.swift */,
 			);
 			path = CoreData;
@@ -608,16 +596,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9303B8DE23AF6BE00050A4B5 /* CDStat+CoreDataProperties.swift in Sources */,
-				93D3257A23AF3CEB006C0BC5 /* URLSessionProtocol.swift in Sources */,
 				9303B8E323AF6BE00050A4B5 /* CDSprite+CoreDataClass.swift in Sources */,
 				93C80ECC23B21E8D00B05045 /* PokemonTableViewCell.swift in Sources */,
 				9303B8E023AF6BE00050A4B5 /* CDType+CoreDataProperties.swift in Sources */,
-				93D3257723AF2745006C0BC5 /* NetworkingManager.swift in Sources */,
 				93C80ECE23B2254400B05045 /* UIViewExtension.swift in Sources */,
 				93D3255423AF12B7006C0BC5 /* NamedAPIResourceList.swift in Sources */,
 				93D2ECD123BD91C30077E0D4 /* NetworkingClient.swift in Sources */,
 				93C80EBB23B09F4300B05045 /* DataManagerFacade.swift in Sources */,
-				9303B90A23B066BC0050A4B5 /* CoreDataManager.swift in Sources */,
 				93C80EC823B1CB8100B05045 /* PokemonView.swift in Sources */,
 				93C80EC223B10A4100B05045 /* LoaderTableViewCell.swift in Sources */,
 				9379614823C3622C0001D14B /* ImageClient.swift in Sources */,
@@ -626,7 +611,6 @@
 				9303B91323B06FF50050A4B5 /* CDListItem+CoreDataClass.swift in Sources */,
 				93C80EB923B09E0500B05045 /* CellIdentifier.swift in Sources */,
 				93D3258823AF5B9C006C0BC5 /* Pokemon.swift in Sources */,
-				93D3257D23AF3D2A006C0BC5 /* URLSessionExtention.swift in Sources */,
 				9303B8DB23AF6BE00050A4B5 /* CDMove+CoreDataClass.swift in Sources */,
 				9303B8DD23AF6BE00050A4B5 /* CDStat+CoreDataClass.swift in Sources */,
 				9303B8E823AF7A7D0050A4B5 /* PokemonMove.swift in Sources */,
@@ -656,6 +640,7 @@
 				93C80EBE23B0AD7B00B05045 /* PokemonViewController.swift in Sources */,
 				9303B8D923AF6BE00050A4B5 /* CDPokemon+CoreDataClass.swift in Sources */,
 				93D3255623AF12D4006C0BC5 /* JSONPokemonType.swift in Sources */,
+				93D8267823C5BBE000D51371 /* NetworkRequestable.swift in Sources */,
 				9303B8E423AF6BE00050A4B5 /* CDSprite+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -664,19 +649,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D8267623C5BB7900D51371 /* MockNetworkingClient.swift in Sources */,
 				93D2ECD523BD958E0077E0D4 /* MockURLSession.swift in Sources */,
 				9303B8F923AFA8EB0050A4B5 /* DataTaskDataMock.swift in Sources */,
 				93D2ECD723BD95ED0077E0D4 /* MockURLSessionDataTask.swift in Sources */,
 				9303B90723AFB4D80050A4B5 /* ModelsTests.swift in Sources */,
 				9379614A23C362470001D14B /* ImageClientTests.swift in Sources */,
 				93C80ED223B30B7D00B05045 /* DataManagerFacadeTests.swift in Sources */,
-				9303B8F723AFA8970050A4B5 /* URLSessionMock.swift in Sources */,
 				9303B8F523AFA8700050A4B5 /* DataTaskMock.swift in Sources */,
 				9303B8F023AFA6680050A4B5 /* CoreDataModelsTests.swift in Sources */,
 				93D2ECDF23BDCE550077E0D4 /* Data+JSONFile.swift in Sources */,
 				9303B8F323AFA7D00050A4B5 /* MockData.swift in Sources */,
 				93D2ECD323BD91DF0077E0D4 /* NetworkingClientTests.swift in Sources */,
-				9303B8FB23AFA90A0050A4B5 /* URLSessionDataMock.swift in Sources */,
 				9379614C23C429B10001D14B /* CoreDataStackTests.swift in Sources */,
 				9379615023C42F430001D14B /* CoreDataClientTests.swift in Sources */,
 			);

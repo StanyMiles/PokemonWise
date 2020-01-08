@@ -12,6 +12,15 @@ import CoreData
 
 public class CDMove: NSManagedObject {
   
+  // MARK: - Properties
+  
+  var name: String {
+    get { cdName ?? "no name" }
+    set { cdName = newValue }
+  }
+  
+  // MARK: - Funcs
+  
   static func initialize(
     with move: JSONPokemonMove,
     in context: NSManagedObjectContext

@@ -36,6 +36,8 @@ class PokemonViewController: UIViewController {
     }
   }
   
+  private var dataTask: URLSessionDataTask?
+  
   // MARK: - UIViewController Lifecycle Funcs
   
   override func viewDidLoad() {
@@ -49,17 +51,25 @@ class PokemonViewController: UIViewController {
     requestPokemon(forURLString: pokemonListItem.urlString)
   }
   
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    dataTask?.cancel()
+    dataTask = nil
+  }
+  
   // MARK: - Funcs
   
   private func requestPokemon(forURLString urlString: String) {
+    guard let url = URL(string: urlString) else { return }
     
     activityIndicatorView.startAnimating()
     
-    dataManager.requestPokemon(withURLString: urlString) { [weak self] result in
+    dataTask = dataManager.requestPokemon(
+      withURL: url
+    ) { [weak self] result in
       guard let self = self else { return }
-      
-      switch result {
 
+      switch result {
       case .success(let pokemon):
 
         DispatchQueue.main.async {
@@ -77,7 +87,7 @@ class PokemonViewController: UIViewController {
         #if DEBUG
         print("Failed to load Pokemon:", error)
         #endif
- 
+
         DispatchQueue.main.async {
           self.presentNoDataView()
           self.activityIndicatorView.stopAnimating()

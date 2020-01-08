@@ -12,6 +12,15 @@ import CoreData
 
 public class CDAbility: NSManagedObject {
   
+  // MARK: - Properties
+  
+  var name: String {
+    get { cdName ?? "no name" }
+    set { cdName = newValue }
+  }
+  
+  // MARK: - Funcs
+  
   static func initialize(
     with ability: JSONPokemonAbility,
     in context: NSManagedObjectContext

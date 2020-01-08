@@ -2,13 +2,14 @@
 //  CDType+CoreDataProperties.swift
 //  StanislavKobiletski
 //
-//  Created by Stanislav Kobiletski on 22.12.2019.
-//  Copyright © 2019 Stanislav Kobiletski. All rights reserved.
+//  Created by Stanislav Kobiletski on 08.01.2020.
+//  Copyright © 2020 Stanislav Kobiletski. All rights reserved.
 //
 //
 
 import Foundation
 import CoreData
+
 
 extension CDType {
   
@@ -16,7 +17,7 @@ extension CDType {
     return NSFetchRequest<CDType>(entityName: "CDType")
   }
   
-  @NSManaged public var name: String
+  @NSManaged public var cdName: String?
   @NSManaged public var slot: Int16
   @NSManaged public var pokemon: CDPokemon?
   

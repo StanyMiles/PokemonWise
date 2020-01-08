@@ -12,6 +12,15 @@ import CoreData
 
 public class CDType: NSManagedObject {
 
+  // MARK: - Proprteies
+  
+  var name: String {
+    get { cdName ?? "no name" }
+    set { cdName = newValue }
+  }
+  
+  // MARK: - Funcs
+  
   static func initialize(
     with type: JSONPokemonType,
     in context: NSManagedObjectContext

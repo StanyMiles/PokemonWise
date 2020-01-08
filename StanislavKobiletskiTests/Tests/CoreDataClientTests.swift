@@ -427,7 +427,7 @@ class CoreDataClientTests: XCTestCase {
     XCTAssertEqual(expectedError, .incorrectPage)
   }
   
-  func test_requestPokemonListItems_givenCorrectPage_throwsNoError() {
+  func test_requestPokemonListItems_givenCorrectPage_throwsNoError() throws {
     // given
     let limit = 0
     let page = 1
@@ -443,7 +443,24 @@ class CoreDataClientTests: XCTestCase {
     }
     
     // then
-    XCTAssertNil(expectedError)
+    XCTAssertNotEqual(expectedError, .incorrectPage)
+  }
+  
+  func test_requestPokemonListItems_givenNoPokemons_throwsError() {
+    // given
+    var expectedError: CoreDataClient.Error?
+    
+    // when
+    do {
+      _ = try sut.requestPokemonListItems(
+        forPage: 1,
+        limit: 0)
+    } catch {
+      expectedError = error as? CoreDataClient.Error
+    }
+    
+    // then
+    XCTAssertEqual(expectedError, .noData)
   }
   
   func test_requestPokemon_givenPokemons_fetchesCorrectPokemon() throws {

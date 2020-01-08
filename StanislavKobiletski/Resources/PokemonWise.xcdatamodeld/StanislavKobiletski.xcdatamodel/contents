@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDAbility" representedClassName=".CDAbility" syncable="YES">
+        <attribute name="cdName" attributeType="String"/>
         <attribute name="isHidden" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String"/>
         <attribute name="slot" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="pokemons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="abilities" inverseEntity="CDPokemon"/>
     </entity>
     <entity name="CDListItem" representedClassName=".CDListItem" syncable="YES">
-        <attribute name="name" attributeType="String"/>
+        <attribute name="cdName" attributeType="String"/>
+        <attribute name="cdUrlString" attributeType="String"/>
         <attribute name="position" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="urlString" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="urlString"/>
+                <constraint value="cdUrlString"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <entity name="CDMove" representedClassName=".CDMove" syncable="YES">
-        <attribute name="name" attributeType="String"/>
+        <attribute name="cdName" attributeType="String"/>
         <relationship name="pokemons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="moves" inverseEntity="CDPokemon"/>
     </entity>
     <entity name="CDPokemon" representedClassName=".CDPokemon" syncable="YES">
         <attribute name="baseExperience" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cdName" attributeType="String"/>
+        <attribute name="cdSpecies" attributeType="String"/>
+        <attribute name="cdUrlString" attributeType="String"/>
         <attribute name="height" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="species" attributeType="String"/>
-        <attribute name="urlString" attributeType="String"/>
         <attribute name="weight" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="abilities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDAbility" inverseName="pokemons" inverseEntity="CDAbility"/>
         <relationship name="moves" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDMove" inverseName="pokemons" inverseEntity="CDMove"/>
@@ -36,30 +36,30 @@
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
-                <constraint value="urlString"/>
+                <constraint value="cdUrlString"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <entity name="CDSprite" representedClassName=".CDSprite" syncable="YES">
+        <attribute name="cdName" attributeType="String"/>
+        <attribute name="cdUrlString" attributeType="String"/>
         <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="isFemale" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="urlString" attributeType="String"/>
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="sprites" inverseEntity="CDPokemon"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="urlString"/>
+                <constraint value="cdUrlString"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <entity name="CDStat" representedClassName=".CDStat" syncable="YES">
         <attribute name="baseStat" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cdName" attributeType="String"/>
         <attribute name="effort" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String"/>
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="stats" inverseEntity="CDPokemon"/>
     </entity>
     <entity name="CDType" representedClassName=".CDType" syncable="YES">
-        <attribute name="name" attributeType="String"/>
+        <attribute name="cdName" attributeType="String"/>
         <attribute name="slot" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPokemon" inverseName="types" inverseEntity="CDPokemon"/>
     </entity>

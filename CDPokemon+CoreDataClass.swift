@@ -12,7 +12,23 @@ import CoreData
 
 public class CDPokemon: NSManagedObject {
   
+  
   // MARK: - Properties
+  
+  var name: String {
+    get { cdName ?? "no name" }
+    set { cdName = newValue }
+  }
+  
+  var urlString: String {
+    get { cdUrlString ?? "no url" }
+    set { cdUrlString = newValue }
+  }
+  
+  var species: String {
+    get { cdSpecies ?? "unknown" }
+    set { cdSpecies = newValue }
+  }
   
   var formattedAbilities: [CDAbility] {
     let abilities = self.abilities?.allObjects as? [CDAbility]

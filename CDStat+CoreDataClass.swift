@@ -12,6 +12,15 @@ import CoreData
 
 public class CDStat: NSManagedObject {
 
+  // MARK: - Proprteies
+  
+  var name: String {
+    get { cdName ?? "no name" }
+    set { cdName = newValue }
+  }
+  
+  // MARK: - Funcs
+  
   static func initialize(
     with stat: JSONPokemonStat,
     in context: NSManagedObjectContext

@@ -12,17 +12,21 @@ class DataManagerFacade {
   
   // MARK: - Properties
   
-  let coreDataManager: CoreDataManager
-  let networkManager: NetworkingManager
+  static let shared = DataManagerFacade(
+    coreDataClient: CoreDataClient(),
+    networkingClient: NetworkingClient.shared)
+  
+  let coreDataClient: CoreDataClient
+  let networkingClient: NetworkingClient
   
   // MARK: - Initializer
   
   init(
-    coreDataManager: CoreDataManager = CoreDataManager(),
-    networkManager: NetworkingManager = NetworkingManager()
+    coreDataClient: CoreDataClient,
+    networkingClient: NetworkingClient
   ) {
-    self.coreDataManager = coreDataManager
-    self.networkManager = networkManager
+    self.coreDataClient = coreDataClient
+    self.networkingClient = networkingClient
   }
   
   // MARK: - Funcs
@@ -36,27 +40,28 @@ class DataManagerFacade {
     forPage page: Int,
     limit: Int = 20,
     completion: @escaping (Result<[PokemonListItem], Error>) -> Void
-  ) {
-    assert(page > 0, "Pages must start with 1")
-    
-    requestPokemonsFromServer(
+  ) throws -> URLSessionDataTask {
+
+    let dataTask = try requestPokemonsFromServerAndSaveLocallyOnSuccess(
       forPage: page,
       limit: limit
     ) { [weak self] result in
-
+      
       guard let self = self else { return }
-
-      DispatchQueue.main.async {
-
-        switch result {
-        case .success(let pokemonListItems):
-          completion(.success(pokemonListItems))
-
-        case .failure:
-          self.requestPokemonsFromCoreData(forPage: page, completion: completion)
-        }
+      
+      switch result {
+      case .success(let pokemonListItems):
+        completion(.success(pokemonListItems))
+        
+      case .failure:
+        self.requestPokemonsFromCoreData(
+          forPage: page,
+          limit: limit,
+          completion: completion)
       }
     }
+    
+    return dataTask
   }
   
   /// Requests data from Server, on failure or missing requests data locally.
@@ -65,30 +70,28 @@ class DataManagerFacade {
   ///   - urlString: URL to download remotely.
   ///   Unique for each pokemon, and is used to request data locally
   func requestPokemon(
-    withURLString urlString: String,
+    withURL url: URL,
     completion: @escaping (Result<Pokemon, Error>) -> Void
-  ) {
-    
-    requestPokemonFromServer(
-      withUrlString: urlString
-    ) { [weak self] result in
+  ) -> URLSessionDataTask {
 
+    let dataTask = requestPokemonFromServer(
+      withUrl: url
+    ) { [weak self] result in
       guard let self = self else { return }
 
-      DispatchQueue.main.async {
-
-        switch result {
-
-        case .success(let pokemon):
-          completion(.success(pokemon))
-
-        case .failure:
-          self.requestPokemonFromCoreData(
-            withURLString: urlString,
-            completion: completion)
-        }
+      switch result {
+        
+      case .success(let pokemon):
+        completion(.success(pokemon))
+        
+      case .failure:
+        self.requestPokemonFromCoreData(
+          withURLString: url.absoluteString,
+          completion: completion)
       }
     }
+    
+    return dataTask
   }
   
   /// Requests data from Server, on failure or missing requests data locally.
@@ -97,34 +100,36 @@ class DataManagerFacade {
   ///   - urlString: URL to load data.
   ///   Unique for each image, is used to request single CDSprite object to store data locally.
   func requestImageData(
-    forURLString urlString: String,
+    forURL url: URL,
     completion: @escaping (Result<Data, Error>) -> Void
   ) {
     
-    networkManager.requestData(forImageUrl: urlString) { [weak self] result in
-      guard let self = self else {
-        print("Object deallocated")
-        return
-      }
-      
-      switch result {
-      case .success(let data):
-        
-        DispatchQueue.main.async {
-          completion(.success(data))
-        }
-        
-        self.saveLocally(imageData: data, forURLString: urlString)
-        
-      case .failure:
-        DispatchQueue.main.async {
-          
-          self.requestSpriteDataFromCoreData(
-            withURLString: urlString,
-            completion: completion)
-        }
-      }
-    }
+//    networkManager.requestData(forImageUrl: urlString) { [weak self] result in
+//      guard let self = self else {
+//        print("Object deallocated")
+//        return
+//      }
+//
+//      switch result {
+//      case .success(let data):
+//
+//        DispatchQueue.main.async {
+//          completion(.success(data))
+//        }
+//
+//        self.saveLocally(imageData: data, forURLString: urlString)
+//
+//      case .failure:
+//        DispatchQueue.main.async {
+//
+//          self.requestSpriteDataFromCoreData(
+//            withURLString: urlString,
+//            completion: completion)
+//        }
+//      }
+//    }
+    
+    completion(.failure(NSError()))
   }
 }
 
@@ -132,162 +137,184 @@ class DataManagerFacade {
 
 extension DataManagerFacade {
   
-  private func requestPokemonsFromServer(
+  private func requestPokemonsFromServerAndSaveLocallyOnSuccess(
     forPage page: Int,
     limit: Int,
     completion: @escaping (Result<[PokemonListItem], Error>) -> Void
-  ) {
-    assert(page > 0, "Pages must start with 1")
+  ) throws -> URLSessionDataTask {
     
-    networkManager.requestPokemons(
-      forPage: page,
+    let dataTask =  try networkingClient.requestPokemons(
+      page: page,
       limit: limit
-    ) { result in
-        
+    ) { [weak self] result in
+      
+      guard let self = self else { return }
+      
       switch result {
-      case .success(let namedResourceList):
+      case .success(let pokemonListItems):
         
-        let pokemonListItems = namedResourceList.results.map { PokemonListItem($0) }
-        completion(.success(pokemonListItems))
+        let pokemons = pokemonListItems.map { PokemonListItem($0) }
+        completion(.success(pokemons))
+        
+        #warning("test for save locally")
+        let startIndex = Int16((page - 1) * limit)
+        self.saveLocally(
+          pokemonListItems: pokemonListItems,
+          startIndex: startIndex)
         
         #if DEBUG
         print("Received Pokemons for page \(page) from Server")
         #endif
         
-        let startIndex = (page - 1) * limit
-        
-        self.saveLocally(
-          pokemonListItems: namedResourceList.results,
-          startIndex: startIndex)
-          
       case .failure(let error):
         completion(.failure(error))
       }
     }
+    
+    return dataTask
   }
-  
+
   private func requestPokemonFromServer(
-    withUrlString urlString: String,
+    withUrl url: URL,
     completion: @escaping (Result<Pokemon, Error>) -> Void
-  ) {
-    networkManager.requestPokemon(withURLString: urlString) { result in
-      
+  ) -> URLSessionDataTask {
+    
+    let dataTask = networkingClient.requestSinglePokemon(with: url) { result in
+
       switch result {
       case .success(let jsonPokemon):
-        
+
         let pokemon = Pokemon(jsonPokemon)
         completion(.success(pokemon))
-        
+
         #if DEBUG
         print("Received '\(pokemon.name)' from Server")
         #endif
-        
+
         self.saveLocally(
           jsonPokemon: jsonPokemon,
-          urlString: urlString)
-        
+          urlString: url.absoluteString)
+
       case .failure(let error):
         completion(.failure(error))
       }
     }
+    
+    return dataTask
   }
-  
+
   private func requestPokemonsFromCoreData(
     forPage page: Int,
-    limit: Int = 20,
+    limit: Int,
     completion: @escaping (Result<[PokemonListItem], Error>) -> Void
   ) {
-    
+
     do {
-      let cdListItems = try coreDataManager.requestPokemonListItems(forPage: page,
-                                                                    limit: limit)
+      let pokemonListItems = try coreDataClient.requestPokemonListItems(
+        forPage: page,
+        limit: limit)
       
-      let pokemonListItems = cdListItems.map { PokemonListItem($0) }
-      completion(.success(pokemonListItems))
-      
-      #if DEBUG
-      print("Received Pokemons for page \(page) from CoreData")
-      #endif
+      let pokemons = pokemonListItems.map { PokemonListItem($0) }
+      completion(.success(pokemons))
       
     } catch {
       completion(.failure(error))
     }
   }
-  
+
   private func requestPokemonFromCoreData(
     withURLString urlString: String,
     completion: @escaping (Result<Pokemon, Error>) -> Void
   ) {
-    
+
     do {
-      let cdPokemon = try coreDataManager.requestPokemon(withURLString: urlString)
+      let cdPokemon = try coreDataClient.requestPokemon(withUrlString: urlString)
       let pokemon = Pokemon(cdPokemon)
       completion(.success(pokemon))
-      
+
       #if DEBUG
       print("Received '\(pokemon.name)' from CoreData")
       #endif
-      
+
     } catch {
       completion(.failure(error))
     }
   }
-  
-  private func requestSpriteDataFromCoreData(
+
+  private func requestSpriteImageDataFromCoreData(
     withURLString urlString: String,
     completion: @escaping (Result<Data, Error>) -> Void
   ) {
+    
     do {
-      let sprite = try coreDataManager.requestCDSprite(withUrlString: urlString)
-      
+      let sprite = try coreDataClient.requestSprite(withUrlString: urlString)
+
       guard let data = sprite.imageData else {
-        completion(.failure(CoreDataManager.CoreDataError.noData))
+        completion(.failure(CoreDataClient.Error.noData))
         return
       }
-      
+
       completion(.success(data))
-      
+
     } catch {
       completion(.failure(error))
     }
   }
-  
+
   private func saveLocally(
     pokemonListItems: [NamedAPIResource],
-    startIndex: Int
+    startIndex: Int16
   ) {
-    let privateContext = coreDataManager.makePrivateChildContext()
-    privateContext.perform { [weak self] in
+    DispatchQueue.global().async { [weak self] in
       guard let self = self else { return }
-      self.coreDataManager.save(
-        pokemonListItems: pokemonListItems,
-        startIndex: startIndex,
-        in: privateContext)
+      
+      let privateContext = self.coreDataClient.stack.makePrivateChildContext()
+      privateContext.perform { [weak self] in
+        guard let self = self else { return }
+      
+        self.coreDataClient.save(
+          pokemonListItems,
+          startIndex: startIndex,
+          context: privateContext)
+      }
     }
   }
-  
+
   private func saveLocally(
     jsonPokemon: JSONPokemon,
     urlString: String
   ) {
-    let privateContext = coreDataManager.makePrivateChildContext()
-    privateContext.perform { [weak self] in
+    DispatchQueue.global().async { [weak self] in
       guard let self = self else { return }
-      self.coreDataManager.save(
-        jsonPokemon: jsonPokemon,
-        urlString: urlString,
-        in: privateContext)
+      
+      let privateContext = self.coreDataClient.stack.makePrivateChildContext()
+      privateContext.perform { [weak self] in
+        guard let self = self else { return }
+        
+        self.coreDataClient.save(
+          jsonPokemon,
+          urlString: urlString,
+          in: privateContext)
+      }
     }
   }
-  
-  private func saveLocally(imageData: Data, forURLString urlString: String) {
-    let privateContext = coreDataManager.makePrivateChildContext()
-    privateContext.perform { [weak self] in
+
+  private func saveLocally(
+    imageData: Data,
+    forUrlString urlString: String
+  ) {
+    DispatchQueue.global().async { [weak self] in
       guard let self = self else { return }
-      self.coreDataManager.save(
-        imageData: imageData,
-        forURLString: urlString,
-        in: privateContext)
+      
+      let privateContext = self.coreDataClient.stack.makePrivateChildContext()
+      privateContext.perform { [weak self] in
+        guard let self = self else { return }
+        
+        self.coreDataClient.save(
+          imageData,
+          fromUrlString: urlString,
+          in: privateContext)
+      }
     }
   }
   

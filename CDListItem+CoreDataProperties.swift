@@ -2,13 +2,14 @@
 //  CDListItem+CoreDataProperties.swift
 //  StanislavKobiletski
 //
-//  Created by Stanislav Kobiletski on 23.12.2019.
-//  Copyright © 2019 Stanislav Kobiletski. All rights reserved.
+//  Created by Stanislav Kobiletski on 08.01.2020.
+//  Copyright © 2020 Stanislav Kobiletski. All rights reserved.
 //
 //
 
 import Foundation
 import CoreData
+
 
 extension CDListItem {
   
@@ -16,8 +17,8 @@ extension CDListItem {
     return NSFetchRequest<CDListItem>(entityName: "CDListItem")
   }
   
-  @NSManaged public var name: String
-  @NSManaged public var urlString: String
+  @NSManaged public var cdName: String?
   @NSManaged public var position: Int16
+  @NSManaged public var cdUrlString: String?
   
 }

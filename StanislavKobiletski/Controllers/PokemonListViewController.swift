@@ -54,28 +54,40 @@ class PokemonListViewController: UITableViewController {
     if !hasMoreData || isLoading { return }
     isLoading = true
     
-    dataManager.requestPokemons(forPage: page) { [weak self] result in
-      guard let self = self else { return }
-      
-      self.tableView.refreshControl?.endRefreshing()
-      
-      switch result {
+    #warning("handle that")
+    do {
+      _ = try dataManager.requestPokemons(
+        forPage: page
+      ) { [weak self] result in
+        guard let self = self else { return }
         
-      case .success(let pokemonListItems):
-        self.addNew(pokemonListItems)
+        self.tableView.refreshControl?.endRefreshing()
         
-      case .failure(let error):
-        #if DEBUG
-        print("Failed to load PokemonListItems: ", error)
-        #endif
-        
-        self.hasMoreData = false
-        self.isLoading = false
-        
-        DispatchQueue.main.async {
+        switch result {
+          
+        case .success(let pokemonListItems):
+          self.addNew(pokemonListItems)
+          
+        case .failure(let error):
+          #if DEBUG
+          print("Failed to load PokemonListItems: ", error)
+          #endif
+          
+          self.hasMoreData = false
+          self.isLoading = false
+          
           self.tableView.reloadData()
         }
       }
+    } catch {
+      #if DEBUG
+      print("Failed to load PokemonListItems: ", error)
+      #endif
+      
+      self.hasMoreData = false
+      self.isLoading = false
+      
+      self.tableView.reloadData()
     }
   }
   

@@ -221,24 +221,24 @@ struct PokemonViewModel {
   
   private func loadImageData(for sprite: Pokemon.Sprite, imageView: UIImageView) {
     
-    dataManagerFacade.requestImageData(
-      forURLString: sprite.urlString
-    ) { result in
-      
-      switch result {
-        
-      case .success(let data):
-        let image = UIImage(data: data)
-        imageView.image = image
-        
-        self.present(imageView: imageView)
-        
-      case .failure(let error):
-        #if DEBUG
-        print("Failed to load data for image:", error)
-        #endif
-      }
-    }
+//    dataManagerFacade.requestImageData(
+//      forURLString: sprite.urlString
+//    ) { result in
+//      
+//      switch result {
+//        
+//      case .success(let data):
+//        let image = UIImage(data: data)
+//        imageView.image = image
+//        
+//        self.present(imageView: imageView)
+//        
+//      case .failure(let error):
+//        #if DEBUG
+//        print("Failed to load data for image:", error)
+//        #endif
+//      }
+//    }
   }
   
 }

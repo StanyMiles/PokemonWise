@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var dataManager: DataManagerFacade!
   
-  private var coreDataManager: CoreDataManager!
-  private var networkingManager: NetworkingManager!
+  private var coreDataClient: CoreDataClient!
+  private var networkingClient: NetworkingClient!
   
   // MARK: - UIApplication Lifecycle
   
@@ -26,17 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     
-    coreDataManager = CoreDataManager()
-    networkingManager = NetworkingManager()
+    coreDataClient = CoreDataClient()
+    networkingClient = NetworkingClient.shared
     
     dataManager = DataManagerFacade(
-      coreDataManager: coreDataManager,
-      networkManager: networkingManager)
+      coreDataClient: coreDataClient,
+      networkingClient: networkingClient)
     
     return true
   }
-  
-  // MARK: UISceneSession Lifecycle
   
   func application(
     _ application: UIApplication,
@@ -49,11 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       sessionRole: connectingSceneSession.role)
   }
   
+  func applicationWillTerminate(_ application: UIApplication) {
+    saveContext()
+  }
 }
 
 extension AppDelegate {
   
   func saveContext() {
-    coreDataManager.saveContext()
+    coreDataClient.stack.saveChanges()
   }
 }
