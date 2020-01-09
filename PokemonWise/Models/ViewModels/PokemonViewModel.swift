@@ -14,7 +14,7 @@ struct PokemonViewModel {
   
   let pokemon: Pokemon
   let pokemonView: PokemonView
-  let dataManagerFacade: DataManagerFacade
+  let imageClient: ImageClient
   
   private let infoAttributes: [NSAttributedString.Key: Any] = [
     .font: UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -149,8 +149,6 @@ struct PokemonViewModel {
   private func setupImages() {
     typealias Name = Pokemon.Sprite.Name
     
-    hideImageViews()
-    
     for sprite in pokemon.sprites {
       
       let imageView: UIImageView
@@ -183,20 +181,6 @@ struct PokemonViewModel {
     }
   }
   
-  private func hideImageViews() {
-    let imageViews = [
-      pokemonView.frontImageView,
-      pokemonView.backImageView,
-      pokemonView.frontShinyImageView,
-      pokemonView.frontShinyImageView,
-      pokemonView.frontFemaleImageView,
-      pokemonView.frontShinyFemaleImageView,
-      pokemonView.backFemaleImageView,
-      pokemonView.backShinyFemaleImageView,
-    ]
-    imageViews.forEach { $0?.alpha = 0 }
-  }
-  
   private func setup(
     _ imageView: UIImageView,
     withSprite sprite: Pokemon.Sprite
@@ -221,24 +205,12 @@ struct PokemonViewModel {
   
   private func loadImageData(for sprite: Pokemon.Sprite, imageView: UIImageView) {
     
-//    dataManagerFacade.requestImageData(
-//      forURLString: sprite.urlString
-//    ) { result in
-//      
-//      switch result {
-//        
-//      case .success(let data):
-//        let image = UIImage(data: data)
-//        imageView.image = image
-//        
-//        self.present(imageView: imageView)
-//        
-//      case .failure(let error):
-//        #if DEBUG
-//        print("Failed to load data for image:", error)
-//        #endif
-//      }
-//    }
+    guard let url = URL(string: sprite.urlString) else { return }
+    
+    imageClient.setImage(
+      on: imageView,
+      fromURL: url,
+      withPlaceholder: nil)
   }
   
 }

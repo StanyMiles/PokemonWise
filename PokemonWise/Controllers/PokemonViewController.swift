@@ -42,7 +42,7 @@ class PokemonViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    assert(pokemonListItem != nil, "pokemonUrlString must be set before initialization")
+    assert(pokemonListItem != nil, "pokemonListItem must be set before initialization")
     assert(dataManager != nil, "dataManager must be set before initialization")
     
     navigationController?.navigationBar.prefersLargeTitles = true
@@ -77,7 +77,7 @@ class PokemonViewController: UIViewController {
           let viewModel = PokemonViewModel(
             pokemon: pokemon,
             pokemonView: self.pokemonView,
-            dataManagerFacade: self.dataManager)
+            imageClient: .shared)
 
           self.pokemonViewModel = viewModel
           self.activityIndicatorView.stopAnimating()

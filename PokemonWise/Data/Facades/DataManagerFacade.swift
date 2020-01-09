@@ -6,7 +6,7 @@
 //  Copyright © 2019 Stanislav Kobiletski. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class DataManagerFacade {
   
@@ -14,19 +14,23 @@ class DataManagerFacade {
   
   static let shared = DataManagerFacade(
     coreDataClient: CoreDataClient(),
-    networkingClient: NetworkingClient.shared)
+    networkingClient: .shared,
+    imageClient: .shared)
   
   let coreDataClient: CoreDataClient
   let networkingClient: NetworkingClient
+  let imageClient: ImageClient
   
   // MARK: - Initializer
   
   init(
     coreDataClient: CoreDataClient,
-    networkingClient: NetworkingClient
+    networkingClient: NetworkingClient,
+    imageClient: ImageClient
   ) {
     self.coreDataClient = coreDataClient
     self.networkingClient = networkingClient
+    self.imageClient = imageClient
   }
   
   // MARK: - Funcs
@@ -99,38 +103,35 @@ class DataManagerFacade {
   /// - Parameters:
   ///   - urlString: URL to load data.
   ///   Unique for each image, is used to request single CDSprite object to store data locally.
-  func requestImageData(
-    forURL url: URL,
-    completion: @escaping (Result<Data, Error>) -> Void
-  ) {
-    
-//    networkManager.requestData(forImageUrl: urlString) { [weak self] result in
-//      guard let self = self else {
-//        print("Object deallocated")
-//        return
-//      }
+//  func requestImageData(
+//    forURL url: URL,
+//    completion: @escaping (Result<UIImage, Error>) -> Void
+//  ) -> URLSessionDataTask {
+//
+//    let dataTask = imageClient.downloadImage(
+//      fromURL: url
+//    ) { [weak self] result in
+//
+//      guard let self = self else { return }
 //
 //      switch result {
-//      case .success(let data):
+//      case .success(let image):
+//        completion(.success(image))
 //
-//        DispatchQueue.main.async {
-//          completion(.success(data))
-//        }
-//
-//        self.saveLocally(imageData: data, forURLString: urlString)
+//        self.saveLocally(
+//          imageData: image.pngData()!,
+//          forUrlString: url.absoluteString)
 //
 //      case .failure:
 //        DispatchQueue.main.async {
 //
 //          self.requestSpriteDataFromCoreData(
-//            withURLString: urlString,
+//            withURLString: url.absoluteString,
 //            completion: completion)
 //        }
 //      }
 //    }
-    
-    completion(.failure(NSError()))
-  }
+//  }
 }
 
 // MARK: - Private funcs

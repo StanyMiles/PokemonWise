@@ -73,6 +73,7 @@ class ImageClient {
     
     cachedTaskForImageView[imageView]?.cancel()
     
+    imageView.alpha = 0
     imageView.image = placeholder
     
     cachedTaskForImageView[imageView] = downloadImage(
@@ -86,6 +87,11 @@ class ImageClient {
       switch result {
       case .success(let image):
         imageView.image = image
+        
+        UIView.animate(withDuration: 0.3) {
+          imageView.alpha = 1
+        }
+        
       case .failure(let error):
         #if DEBUG
         print("Set Image failed with error:", String(describing: error))

@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   private var coreDataClient: CoreDataClient!
   private var networkingClient: NetworkingClient!
+  private var imageClient: ImageClient!
   
   // MARK: - UIApplication Lifecycle
   
@@ -28,10 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     coreDataClient = CoreDataClient()
     networkingClient = NetworkingClient.shared
+    imageClient = ImageClient.shared
     
     dataManager = DataManagerFacade(
       coreDataClient: coreDataClient,
-      networkingClient: networkingClient)
+      networkingClient: networkingClient,
+      imageClient: imageClient)
     
     return true
   }
