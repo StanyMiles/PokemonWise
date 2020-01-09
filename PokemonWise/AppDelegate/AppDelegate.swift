@@ -28,8 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   ) -> Bool {
     
     coreDataClient = CoreDataClient()
-    networkingClient = NetworkingClient.shared
-    imageClient = ImageClient.shared
+    networkingClient = .shared
+    imageClient = .shared
     
     dataManager = DataManagerFacade(
       coreDataClient: coreDataClient,
